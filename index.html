@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farsight - YouTube Research Companion</title>
+  <meta name="description" content="Track the channels you admire. See what makes their videos work. Grow your own channel with data, not guesswork.">
+  <meta property="og:title" content="Farsight - YouTube Research Companion">
+  <meta property="og:description" content="Track the channels you admire. See what makes their videos work. Grow your own channel with data, not guesswork.">
+  <meta property="og:url" content="https://getfarsight.app">
+  <meta property="og:type" content="website">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #1c1917;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Layout */
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .logo { font-weight: 700; font-size: 18px; color: #1c1917; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      font-size: 14px;
+      color: #78716c;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #1c1917; }
+
+    /* Sections */
+    .section-warm { background: #fef7ed; }
+    .section-light { background: #fffbf5; }
+    section { padding: 64px 0; }
+
+    /* Hero */
+    .hero { text-align: center; padding-top: 40px; }
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .hero .subtitle {
+      font-size: 16px;
+      color: #78716c;
+      margin-top: 16px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: #f59e0b;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: background 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: #d97706; }
+    .btn-secondary {
+      display: inline-block;
+      background: #fff;
+      color: #57534e;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1.5px solid #e7e5e4;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { border-color: #d6d3d1; }
+    .hero-note {
+      font-size: 13px;
+      color: #a8a29e;
+      margin-top: 12px;
+    }
+    .screenshot-container {
+      margin-top: 32px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
+    .screenshot-container img {
+      width: 100%;
+      display: block;
+    }
+    .screenshot-placeholder {
+      background: #e7e5e4;
+      border: 2px dashed #d6d3d1;
+      border-radius: 12px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #78716c;
+      font-size: 14px;
+      margin-top: 32px;
+    }
+
+    /* Features */
+    .features h2, .pricing h2, .download h2 {
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .feature-card {
+      background: #fff;
+      border: 1px solid #f5f0eb;
+      border-radius: 10px;
+      padding: 24px;
+    }
+    .feature-icon { font-size: 24px; margin-bottom: 8px; }
+    .feature-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: #78716c;
+      line-height: 1.5;
+    }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .pricing-card {
+      border-radius: 10px;
+      padding: 28px;
+      text-align: center;
+    }
+    .pricing-free {
+      background: #fff;
+      border: 1px solid #f5f0eb;
+    }
+    .pricing-pro {
+      background: #451a03;
+      color: #fff;
+    }
+    .pricing-card .tier-name { font-size: 17px; font-weight: 700; }
+    .pricing-card .price {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 8px 0;
+    }
+    .pricing-card .price span {
+      font-size: 15px;
+      font-weight: 400;
+      opacity: 0.7;
+    }
+    .pricing-card ul {
+      list-style: none;
+      text-align: left;
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .pricing-card ul li::before {
+      content: "\2713  ";
+    }
+    .pricing-free ul li { color: #78716c; }
+    .pricing-pro ul li { opacity: 0.9; }
+    .pricing-card .btn {
+      display: block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .pricing-free .btn {
+      border: 1.5px solid #e7e5e4;
+      color: #57534e;
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+    .pricing-free .btn:hover { border-color: #d6d3d1; }
+    .pricing-pro .btn {
+      background: #f59e0b;
+      color: #fff;
+      border: none;
+      transition: background 0.2s;
+    }
+    .pricing-pro .btn:hover { background: #d97706; }
+
+    /* Download + Email */
+    .download { text-align: center; }
+    .download .subtitle {
+      font-size: 15px;
+      color: #78716c;
+      margin-bottom: 24px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .email-form {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      max-width: 380px;
+      margin: 20px auto 0;
+    }
+    .email-form input[type="email"] {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid #e7e5e4;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .email-form input[type="email"]:focus { border-color: #f59e0b; }
+    .email-form button {
+      background: #451a03;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .email-form button:hover { background: #5c2d0e; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 32px 0;
+      font-size: 13px;
+      color: #a8a29e;
+    }
+    footer a { color: #78716c; }
+    footer a:hover { color: #1c1917; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 28px; }
+      section { padding: 48px 0; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .screenshot-placeholder { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <div class="section-warm">
+    <nav>
+      <div class="logo">Farsight</div>
+      <div class="nav-links">
+        <a href="#download">Download</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1>Your YouTube research companion</h1>
+        <p class="subtitle">Track the channels you admire. See what makes their videos work. Grow your own channel with data, not guesswork.</p>
+        <div class="hero-buttons">
+          <a href="#download" class="btn-primary">Download Free</a>
+          <a href="#features" class="btn-secondary">See what's inside</a>
+        </div>
+        <p class="hero-note">macOS only. Free forever, Pro for $9/mo.</p>
+        <div class="screenshot-container">
+          <img src="screenshot.png" alt="Farsight app screenshot" onerror="this.parentElement.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot coming soon</div>'">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Features -->
+  <div class="section-light">
+    <section class="features" id="features">
+      <div class="container">
+        <h2>Everything you need to study what works</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">&#128269;</div>
+            <h3>Discover</h3>
+            <p>Search YouTube and instantly see which videos are outperforming their channel average.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">&#128200;</div>
+            <h3>Outlier Detection</h3>
+            <p>Farsight scores every video against its channel's baseline. Find breakout hits at a glance.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">&#128210;</div>
+            <h3>Channel Tracking</h3>
+            <p>Follow your favorite channels and browse their full video history in one feed.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">&#128196;</div>
+            <h3>Transcripts & Export</h3>
+            <p>Pull transcripts from any video. Export your research as a clean PDF.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Pricing -->
+  <div class="section-warm">
+    <section class="pricing" id="pricing">
+      <div class="container">
+        <h2>Simple pricing. Start free.</h2>
+        <div class="pricing-grid">
+          <div class="pricing-card pricing-free">
+            <div class="tier-name">Free</div>
+            <div class="price">$0</div>
+            <ul>
+              <li>Search & discover</li>
+              <li>5 followed channels</li>
+              <li>20 tagged videos</li>
+              <li>Outlier scores</li>
+            </ul>
+            <a href="#download" class="btn">Download</a>
+          </div>
+          <div class="pricing-card pricing-pro">
+            <div class="tier-name">Pro</div>
+            <div class="price">$9<span>/mo</span></div>
+            <ul>
+              <li>Everything in Free</li>
+              <li>Unlimited channels</li>
+              <li>Unlimited tags</li>
+              <li>Channel insights</li>
+              <li>PDF export</li>
+            </ul>
+            <a href="https://buy.polar.sh/polar_cl_lRZ7KhKdk7ifMxOTvx0yCttbBPoXzm8Nx7kll03FJnv" target="_blank" rel="noopener" class="btn">Upgrade</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Download + Email -->
+  <div class="section-light">
+    <section class="download" id="download">
+      <div class="container">
+        <h2>Ready to start?</h2>
+        <p class="subtitle">Download Farsight for free. Or leave your email and we'll let you know when new features drop.</p>
+        <a href="https://github.com/sturimcode/farsight/releases/latest" target="_blank" rel="noopener" class="btn-primary">Download for Mac</a>
+        <form class="email-form" action="https://formspree.io/f/TODO_REPLACE" method="POST">
+          <input type="email" name="email" placeholder="your@email.com" required>
+          <button type="submit">Notify me</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        Made by Elias &nbsp;|&nbsp; getfarsight.app &nbsp;|&nbsp; <a href="mailto:elias@getfarsight.app">elias@getfarsight.app</a>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>
